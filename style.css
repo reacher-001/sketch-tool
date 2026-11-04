@@ -16,6 +16,9 @@ body{
     flex-direction: column;
     gap: 20px;
 }
+.header{
+    align-self: center;
+}
 .control-bar{
     display: flex;
     justify-content: center;
