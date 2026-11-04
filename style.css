@@ -26,3 +26,26 @@ body{
     box-shadow: 0 0 15px 5px rgba(31, 211, 238, 0.625);
     transform: translateY(-2px);
 }
+#grid-container{
+    height: 600px;
+    width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background-color: #e0e0e0;
+    border: 50px solid red;
+    border-radius: 20px;
+}
+.pixel{
+    box-sizing: border-box;
+    flex:0 0;
+    border: 0.5px solid #f0f0f0;
+    user-select: none;
+    --shade-level: 0;
+    background-color: rgba(0,0,0,var(--shade-level));
+    box-sizing: border-box;
+}
+.colored{
+    background-color: black;
+    transition: black 0.1s ease ;
+}
