@@ -1,0 +1,28 @@
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    min-height: 100dvh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F8F9FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.page-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.control-bar{
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+.btn:hover{
+    background-color: #c8eeee;
+    box-shadow: 0 0 15px 5px rgba(31, 211, 238, 0.625);
+    transform: translateY(-2px);
+}
