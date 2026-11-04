@@ -24,17 +24,43 @@ gridContainer.addEventListener("mouseover", (e) => {
     }
 });
 
+//to take user input for grid size
+const setGridSize = document.querySelector("#grid-size-btn");
+setGridSize.addEventListener('click', (e) => {
+    const size = prompt("Enter your custom NxN grid size");
+    //user clicked cancel or pressed esc
+    if(size === null) {
+        console.log("Aborted input operation");
+        return;
+    }
+    //user entered a value
+    else {
+        const intSize = Number.parseInt(size, 10);
+        //user entered a value but not a valid one
+        if(isNaN(intSize)){
+            alert("You have not entered a number, enter a number between 0 to 100");
+            return;
+        } 
+        else if(intSize < 0 || intSize >= MAX_GRID_SIZE) {
+            alert("Value out of range, enter a number between 0 and 100");
+            return;
+        }
+        //user entered a valid size
+        createGrid(intSize);
+    }
+});
 //helper to create a grid of size  NxN
 function createGrid(N) {
     //1. clear existing content from grid
-    gridContainer.innerHTML = "";
+    gridContainer.replaceChildren();
     //2. calculate grid sizing proportion
     let size = 100/N;
     //3. create grid
     for(let i = 0; i < N*N; i++) {
         let pixel = document.createElement("div");
         pixel.classList.add("pixel");
-        pixel.style.flexBasis = `${size}%`;
+        pixel.style.width = `${size}%`;
+        pixel.style.height = `${size}%`;
         gridContainer.appendChild(pixel);
     }
 }

@@ -41,7 +41,8 @@ body{
 }
 .pixel{
     box-sizing: border-box;
-    flex:0 0;
+    flex-grow: 0;
+    flex-shrink: 0;
     border: 0.5px solid #f0f0f0;
     user-select: none;
     --shade-level: 0;
