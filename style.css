@@ -19,10 +19,19 @@ body{
 .header{
     align-self: center;
 }
+.footer{
+    align-self: center;
+    margin-top: 48px;
+}
 .control-bar{
     display: flex;
     justify-content: center;
     gap: 16px;
+}
+.btn{
+    padding: 8px 16px;
+    border-radius: 10px;
+    background-color: aliceblue;
 }
 .btn:hover{
     background-color: #c8eeee;
@@ -46,7 +55,10 @@ body{
     border: 0.5px solid #f0f0f0;
     user-select: none;
     --shade-level: 0;
-    background-color: rgba(0,0,0,var(--shade-level));
+    --r:0;
+    --g:0;
+    --b:0;
+    background-color: rgba(var(--r), var(--g), var(--b), var(--shade-level));
     box-sizing: border-box;
 }
 .colored{

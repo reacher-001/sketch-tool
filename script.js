@@ -1,7 +1,7 @@
 const DEFAULT_GRID_SIZE = 16;
 const MAX_GRID_SIZE = 100;
 let currGridRes = DEFAULT_GRID_SIZE;
-let drawMode = "shading";
+let drawMode = "shader";
 
 const gridContainer = document.querySelector("#grid-container");
 //to detect mouse movement over pixels
@@ -14,14 +14,29 @@ gridContainer.addEventListener("mouseover", (e) => {
     const currPixel = window.getComputedStyle(target);
     //convert string to float
     let currOpacity = Number.parseFloat(currPixel.getPropertyValue("--shade-level"));
-    if(currOpacity < 1.0) {
-        //increase current opacity
-        currOpacity += 0.1;
-        //limit float tp one decimal place to tackle float arthmetic accuracy issues
-        currOpacity = Number(currOpacity.toFixed(1));
-        //set the opacity
-        target.style.setProperty("--shade-level", currOpacity);
+    //return if opacity is max
+    if(currOpacity == 1.0) return;
+    if(drawMode === "rainbow") {
+        //pixel not already shaded
+        if(currOpacity == 0) {
+            //generate random rgb values 
+            target.style.setProperty("--r", Math.floor(Math.random()*256));
+            target.style.setProperty("--g", Math.floor(Math.random()*256));
+            target.style.setProperty("--b", Math.floor(Math.random()*256));
+        }
     }
+    else if(drawMode === "shader") {
+        //generate black rgb values 
+        target.style.setProperty("--r", 0);
+        target.style.setProperty("--g", 0);
+        target.style.setProperty("--b", 0);
+    }
+    //for both modes, increase opacity
+    currOpacity += 0.1;
+    //limit float to one decimal place to tackle float arthmetic accuracy issues
+    currOpacity = Number(currOpacity.toFixed(1));
+    //set the opacity
+    target.style.setProperty("--shade-level", currOpacity);
 });
 
 const ctrlBar = document.querySelector(".control-bar");
@@ -70,8 +85,8 @@ function setGridSize() {
 //2. Reset Grid Size button
 //to reset grid size to default
 function resetGridSize() {
-    let cnf = confirm("Do you want to reset the grid size t default?");
-    if(confirm) {
+    let cnf = confirm("Do you want to reset the grid size to default?");
+    if(cnf) {
         currGridRes = DEFAULT_GRID_SIZE;
         createGrid(currGridRes);
     }
