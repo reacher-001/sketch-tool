@@ -1,9 +1,9 @@
 const DEFAULT_GRID_SIZE = 16;
 const MAX_GRID_SIZE = 100;
+let currGridRes = DEFAULT_GRID_SIZE;
+let drawMode = "shading";
 
 const gridContainer = document.querySelector("#grid-container");
-const ctrlBar = document.querySelector(".control-bar");
-
 //to detect mouse movement over pixels
 gridContainer.addEventListener("mouseover", (e) => {
     const target = e.target.closest(".pixel");
@@ -24,9 +24,26 @@ gridContainer.addEventListener("mouseover", (e) => {
     }
 });
 
+const ctrlBar = document.querySelector(".control-bar");
+ctrlBar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".btn");
+    //click was not registered on a button
+    if(!btn) return;
+    //click was on a button
+    switch(btn.id) {
+        case "grid-size-btn": setGridSize();
+        break;
+        case "reset-grid-size-btn": resetGridSize();
+        break;
+        case "color-mode-btn": toggleColorMode(btn);
+        break;
+        case "clear-canvas-btn": clearCanvas();
+        break;
+    }
+});
+//1. Grid-size button 
 //to take user input for grid size
-const setGridSize = document.querySelector("#grid-size-btn");
-setGridSize.addEventListener('click', (e) => {
+function setGridSize() {
     const size = prompt("Enter your custom NxN grid size");
     //user clicked cancel or pressed esc
     if(size === null) {
@@ -48,7 +65,48 @@ setGridSize.addEventListener('click', (e) => {
         //user entered a valid size
         createGrid(intSize);
     }
-});
+}
+
+//2. Reset Grid Size button
+//to reset grid size to default
+function resetGridSize() {
+    let cnf = confirm("Do you want to reset the grid size t default?");
+    if(confirm) {
+        currGridRes = DEFAULT_GRID_SIZE;
+        createGrid(currGridRes);
+    }
+    else {
+        console.log("Reset grid size operation aborted by user!");
+    }
+}
+
+//3. Color Mode button
+//to switch b/w the two available color modes
+function toggleColorMode(btn) {
+    //change from shader to rainbow
+    if(drawMode === "shader") {
+        drawMode = "rainbow";
+        btn.textContent = "Mode: Rainbow";
+    }
+    //change from rainbow to shader
+    else {
+        drawMode = "shader";
+        btn.textContent = "Mode: Shader";
+    }
+}
+
+//4. Clear Canvas button
+//to clear the canvas
+function clearCanvas() {
+    //select all the pixel(grids) in the grid container
+    const grid = gridContainer.querySelectorAll(".pixel");
+    //iterate over each pixel and reset shade-level and BG color
+    grid.forEach((pixel) => {
+        pixel.style.setProperty("--shade-level", "0");
+        pixel.style.backgroundColor = "";
+    });
+}
+
 //helper to create a grid of size  NxN
 function createGrid(N) {
     //1. clear existing content from grid
